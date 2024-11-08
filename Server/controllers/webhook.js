@@ -1,8 +1,7 @@
-import { Webhook } from "svix";
-import { User } from "../models/User.js";
+const { Webhook } = require("svix");
+const { User } = require("../models/User.js");
 
-
-export const handleWebhook = async () => {
+export const handleWebhook = async (req, res) => {
   try {
     const payloadString = req.body.toString("utf8");
 
@@ -24,8 +23,6 @@ export const handleWebhook = async () => {
     const eventType = evt.type;
     if (eventType === "user.created") {
       console.log(`User ${id} was ${eventType}`);
-
-    //   console.log(attributes);
 
       const firstName = attributes.first_name;
       const lastName = attributes.last_name;
