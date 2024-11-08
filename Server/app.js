@@ -10,12 +10,14 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+// app.use(express.json());
 
 // Import routes
 const fileRoutes = require('./routes/file');
+const { handleWebhook } = require('./controllers/webhook');
 
 // Use routes
+app.post('/api/webhook',bodyParser.raw({ type: 'application/json' }),handleWebhook);
 app.use('/api/files', fileRoutes);
 
 
