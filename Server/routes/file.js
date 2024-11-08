@@ -16,22 +16,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Middleware to verify JWT token
-const authenticate = (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "Access denied" });
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
-        next();
-    } catch (error) {
-        res.status(403).json({ message: "Invalid token" });
-    }
-};
-
 // Upload route
-router.post('/upload', authenticate, upload.single('file'), async (req, res) => {
+router.post('/upload', upload.single('file'), async (req, res) => {
     try {
         const newFile = new File({
             filename: req.file.filename,
@@ -45,7 +31,7 @@ router.post('/upload', authenticate, upload.single('file'), async (req, res) => 
 });
 
 // Route to access a file and log the event
-router.get('/:id', authenticate, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const fileId = req.params.id;
         const userId = req.user.id;
