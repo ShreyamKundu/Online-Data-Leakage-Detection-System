@@ -1,8 +1,36 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button"
 import { Shield, FileText, Bell, Settings, LogOut } from 'lucide-react'
+import axiosInstance from "@/utils/axiosInstance";
+import { useUser } from "@clerk/clerk-react";
+import { useEffect } from "react";
     
 export default function DashboardLayout() {
+  const { isSignedIn, user } = useUser();
+
+  useEffect(() => {
+    const storeUserData = async () => {
+      if (isSignedIn && user) {
+        try {
+          console.log('User data:', user);
+          const userData = {
+            clerkId: user.id,
+            email: user.emailAddresses[0].emailAddress,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            profileUrl: user.imageUrl,
+          };
+
+          await axiosInstance.post('/api/auth/register', userData);
+          console.log('User data saved to the database.');
+        } catch (error) {
+          console.error('Error saving user data:', error);
+        }
+      }
+    };
+
+    storeUserData();
+  }, [isSignedIn, user]);
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}

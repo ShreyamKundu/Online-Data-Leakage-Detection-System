@@ -9,8 +9,13 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
-// app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your frontend URL if it's different
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add methods as needed
+    credentials: true, // If you need cookies/auth tokens
+  }));
+  
+app.use(express.json());
 
 // Import routes
 import fileRoutes from './routes/file.js';
