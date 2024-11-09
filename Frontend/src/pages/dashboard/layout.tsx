@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { Button } from "@/components/ui/button"
 import { Shield, FileText, Bell, Settings, LogOut } from 'lucide-react'
 import axiosInstance from "@/utils/axiosInstance";
@@ -7,7 +7,7 @@ import { useEffect } from "react";
     
 export default function DashboardLayout() {
   const { isSignedIn, user } = useUser();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
   useEffect(() => {
           const storeUserData = async () => {
