@@ -6,10 +6,11 @@ import { Shield, Eye, Lock, AlertTriangle, ArrowRight, Menu } from "lucide-react
 const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center">
-        <Link className="flex items-center justify-center" to="#">
+      <header className="px-4 lg:px-6 h-14 flex items-center gap-5">
+        <Link className="flex items-center gap-2 justify-center" to="#">
           <Shield className="h-6 w-6" />
-          <span className="sr-only">Data Shield</span>
+          {/* <span className=" text-black">Data Shield</span> */}
+          <span className="text-xl font-bold">DataShield</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <Link className="text-sm font-medium hover:underline underline-offset-4" to="#">
@@ -26,8 +27,8 @@ const Home = () => {
           </Link>
         </nav>
         <div className="hidden sm:flex gap-4">
-          <Button variant="outline">Log In</Button>
-          <Button>Sign Up</Button>
+          <Link to='/sign-in'><Button variant="outline">Log In</Button></Link>
+          <Link to='/sign-up'><Button>Sign Up</Button></Link>
         </div>
         <Button variant="ghost" className="sm:hidden">
           <Menu className="h-6 w-6" />

@@ -2,39 +2,60 @@ import { Link, Outlet } from "react-router-dom";
 import { Button } from "@/components/ui/button"
 import { Shield, FileText, Bell, Settings, LogOut } from 'lucide-react'
 import axiosInstance from "@/utils/axiosInstance";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { useEffect } from "react";
-    
+// import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+
 export default function DashboardLayout() {
+  // const [authReady, setAuthReady] = useState(false);
   const { isSignedIn, user } = useUser();
   // const navigate = useNavigate();
-  
-  useEffect(() => {
-          const storeUserData = async () => {
-            if (isSignedIn) {
-              try {
-                console.log('User data:', user);
-                const userData = {
-                  clerkId: user.id,
-                  email: user.emailAddresses[0].emailAddress,
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  profileUrl: user.imageUrl,
-                };
+  // if(!user){
+  //   navigate('/sign-in');
+  //   return null;
+  // }
 
-                await axiosInstance.post('/api/auth/register', userData);
-                console.log('User data saved to the database.');
-              } catch (error) {
-                console.error('Error saving user data:', error);
-              }
-            }
-            // else{
-            //   navigate('/sign-in');
-            // }
+
+//   useEffect(() => {
+//       const timer = setTimeout(() => {
+//           setAuthReady(true);
+//       }, 2000); 
+
+//       return () => clearTimeout(timer);
+//   }, []);
+//   useEffect(() => {
+//     if (authReady &&  !user) {
+//         navigate('/sign-in');
+//     }
+// }, [authReady,  user, navigate]);
+
+  useEffect(() => {
+    const storeUserData = async () => {
+      if (isSignedIn) {
+        try {
+          console.log('User data:', user);
+          const userData = {
+            clerkId: user.id,
+            email: user.emailAddresses[0].emailAddress,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            profileUrl: user.imageUrl,
           };
 
-          storeUserData();
-        },[]);
+          await axiosInstance.post('/api/auth/register', userData);
+          console.log('User data saved to the database.');
+        } catch (error) {
+          console.error('Error saving user data:', error);
+        }
+      }
+      // else{
+      //   navigate('/sign-in');
+      // }
+    };
+
+    storeUserData();
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -61,15 +82,19 @@ export default function DashboardLayout() {
           </Link>
         </nav>
         <div className="absolute bottom-0 w-64 p-4">
-          <Button variant="outline" className="w-full">
+
+          <SignOutButton>     
+            <Button variant="outline" className="w-full">
             <LogOut className="h-4 w-4 mr-2" /> Log Out
           </Button>
+          </SignOutButton>
+
         </div>
       </aside>
 
       {/* Main content */}
       <main className="flex-1 overflow-y-auto p-8">
-      <Outlet />
+        <Outlet />
       </main>
     </div>
   )
