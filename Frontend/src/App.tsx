@@ -5,6 +5,7 @@ import Signin from './sign-in/[[...index]]';
 import Signup from './sign-up/[[...index]]';
 import DashboardLayout from "./pages/dashboard/layout";
 import FilesPage from "./pages/dashboard/files";
+import Starting from "./pages/dashboard/starting";
 
 const App = () => {
   return (
@@ -14,8 +15,12 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/sign-in/*" element={<Signin />} />
         <Route path="/sign-up/*" element={<Signup />} />
-        <Route path="/dashboard/*" element={<DashboardLayout />} />
-        <Route path="/dashboard/files*" element={<FilesPage />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Starting />} />
+          <Route path="files" element={<FilesPage />} />
+          <Route path="alerts" element={<Starting />} />
+          <Route path="settings" element={<Starting />} />
+        </Route>
       </Routes>
     </Router>
   );

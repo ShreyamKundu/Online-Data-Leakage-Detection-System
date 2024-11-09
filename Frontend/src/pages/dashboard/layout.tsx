@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button"
 import { Shield, FileText, Bell, Settings, LogOut } from 'lucide-react'
 import axiosInstance from "@/utils/axiosInstance";
@@ -7,30 +7,35 @@ import { useEffect } from "react";
     
 export default function DashboardLayout() {
   const { isSignedIn, user } = useUser();
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    const storeUserData = async () => {
-      if (isSignedIn && user) {
-        try {
-          console.log('User data:', user);
-          const userData = {
-            clerkId: user.id,
-            email: user.emailAddresses[0].emailAddress,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            profileUrl: user.imageUrl,
+          const storeUserData = async () => {
+            if (isSignedIn) {
+              try {
+                console.log('User data:', user);
+                const userData = {
+                  clerkId: user.id,
+                  email: user.emailAddresses[0].emailAddress,
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  profileUrl: user.imageUrl,
+                };
+
+                await axiosInstance.post('/api/auth/register', userData);
+                console.log('User data saved to the database.');
+              } catch (error) {
+                console.error('Error saving user data:', error);
+              }
+            }
+            // else{
+            //   navigate('/sign-in');
+            // }
           };
 
-          await axiosInstance.post('/api/auth/register', userData);
-          console.log('User data saved to the database.');
-        } catch (error) {
-          console.error('Error saving user data:', error);
-        }
-      }
-    };
+          storeUserData();
+        },[]);
 
-    storeUserData();
-  }, [isSignedIn, user]);
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -64,8 +69,7 @@ export default function DashboardLayout() {
 
       {/* Main content */}
       <main className="flex-1 overflow-y-auto p-8">
-      <h1 className="text-2xl font-bold mb-4">Welcome to the Dashboard</h1>
-      <p>This is the main content area where you can view and manage your dashboard items.</p>
+      <Outlet />
       </main>
     </div>
   )

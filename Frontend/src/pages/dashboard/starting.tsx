@@ -1,5 +1,5 @@
 
-const starting = () => {
+const Starting = () => {
   return (
     <div>
       <h1>Welcome to the Dashboard</h1>
@@ -8,4 +8,4 @@ const starting = () => {
   );
 };
 
-export default starting;
+export default Starting;
