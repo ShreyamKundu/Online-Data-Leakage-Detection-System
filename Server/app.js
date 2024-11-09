@@ -1,7 +1,7 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const cors = require('cors');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
 
 // Initialize dotenv to access environment variables
 dotenv.config();
@@ -13,13 +13,12 @@ app.use(cors());
 // app.use(express.json());
 
 // Import routes
-const fileRoutes = require('./routes/file');
-const { handleWebhook } = require('./controllers/webhook');
+import fileRoutes from './routes/file.js';
+import authRoutes from './routes/auth.js';
 
 // Use routes
-app.post('/api/webhook',bodyParser.raw({ type: 'application/json' }),handleWebhook);
 app.use('/api/files', fileRoutes);
-
+app.use('/api/auth', authRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)

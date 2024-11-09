@@ -1,8 +1,6 @@
-const express = require('express');
-const multer = require('multer');
-const jwt = require('jsonwebtoken');
-const File = require('../models/File');
-const User = require('../models/User');
+import express from 'express';
+import multer from 'multer';
+import File  from '../models/File.js';
 const router = express.Router();
 
 // Multer configuration for file uploads
@@ -84,4 +82,4 @@ router.get('/download/:id', async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const accessLogSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -14,4 +14,4 @@ const fileSchema = new mongoose.Schema({
     accessLog: [accessLogSchema], // Use the accessLogSchema here
 });
 
-module.exports = mongoose.model('File', fileSchema);
+export default mongoose.model('File', fileSchema);

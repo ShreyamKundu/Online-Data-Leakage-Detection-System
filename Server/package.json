@@ -9,6 +9,7 @@
   },
   "keywords": [],
   "author": "Shreyam Kundu",
+  "type": "module",
   "license": "ISC",
   "description": "Online Data Leakage Detection System Server",
   "dependencies": {
