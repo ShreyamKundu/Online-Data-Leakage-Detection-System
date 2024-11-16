@@ -9,7 +9,7 @@ const accessLogSchema = new mongoose.Schema({
 
 const fileSchema = new mongoose.Schema({
     filename: { type: String, required: true },
-    uploaderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    uploaderId: { type: String, ref: 'User', required: true },
     uploadDate: { type: Date, default: Date.now },
     accessLog: [accessLogSchema], // Use the accessLogSchema here
 });
