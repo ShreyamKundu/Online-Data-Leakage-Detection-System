@@ -24,11 +24,11 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   try {
     const newFile = new File({
       filename: req.file.filename,
-      uploaderId: req.user.id,
     });
     await newFile.save();
     res.status(201).json({ message: "File uploaded successfully" });
   } catch (error) {
+    console.log("Error uploading file:", error.message);
     res.status(500).json({ message: "Error uploading file" });
   }
 });
