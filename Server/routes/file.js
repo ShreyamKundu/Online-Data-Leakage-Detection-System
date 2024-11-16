@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
 import File from "../models/File.js";
+import mongoose from "mongoose";
 const router = express.Router();
 
 // Multer configuration for file uploads
@@ -22,9 +23,11 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     return res.status(400).json({ message: "User ID is required" });
   }
   try {
+    const uploaderId =new mongoose.Types.ObjectId(userId);
+
     const newFile = new File({
       filename: req.file?.filename,
-      uploaderId: userId,
+      uploaderId,
     });
     await newFile.save();
     res.status(201).json({ message: "File uploaded successfully" });
