@@ -9,12 +9,23 @@ dotenv.config();
 const app = express();
 
 // Middleware
+// Define allowed origins for CORS
+const allowedOrigins = [
+  'https://dataguard-shreyam-kundus-projects.vercel.app'
+];
+
+// Middleware for CORS with conditional origin handling
 app.use(cors({
-    origin: 'https://dataguard-shreyam-kundus-projects.vercel.app/', // Replace with your frontend URL if it's different
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add methods as needed
-    credentials: true, // If you need cookies/auth tokens
-  }));
-  
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow the origin
+    } else {
+      callback(new Error('Not allowed by CORS')); // Deny the origin
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true, // Enable credentials (cookies/auth tokens) if needed
+}));
 app.use(express.json());
 
 // Import routes
