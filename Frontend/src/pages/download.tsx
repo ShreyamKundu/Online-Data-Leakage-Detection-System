@@ -74,7 +74,7 @@ export default function FileDetailsPage() {
           </div>
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-500">File Size</p>
-            <p className="text-lg text-gray-700">{fileInfo.size}</p>
+            <p className="text-lg text-gray-700">{fileInfo.fileSize}</p>
           </div>
         </CardContent>
         <CardFooter>

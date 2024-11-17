@@ -171,7 +171,7 @@ router.get("/download/:id", async (req, res) => {
     res.download(filePath, file.filename, (err) => {
       if (err) {
         console.error("Error downloading file:", err.message);
-        res.status(500).json({ message: "Error downloading file" });
+        res.status(500).json({ message: "Error downloading file" + err.message });
       }
     });
   } catch (error) {
