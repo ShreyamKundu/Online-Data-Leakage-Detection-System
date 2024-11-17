@@ -94,8 +94,7 @@ export default function FilesPage() {
 
         try {
           const response = await axiosInstance.post('/api/files/upload', formData);
-          const uploadedFile = response.data;
-          setFiles([uploadedFile, ...files]);
+          setFiles(response.data);
         } catch (error) {
           console.error('Error uploading file:', error);
         }
