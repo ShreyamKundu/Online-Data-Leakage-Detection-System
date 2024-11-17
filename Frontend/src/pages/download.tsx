@@ -16,7 +16,7 @@ export default function FileDetailsPage() {
         try {
           const response = await axiosInstance.get(`/api/files/filename/${fileId}`);
           console.log("File details:", response.data);
-          setFileInfo(response.data);
+          setFileInfo(response?.data?.file);
         } catch (error) {
           console.error("Error fetching file details:", error);
         }
