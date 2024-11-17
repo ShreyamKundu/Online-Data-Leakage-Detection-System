@@ -21,18 +21,53 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   if (!userId) {
     return res.status(400).json({ message: "User ID is required" });
   }
+
+  // Check if file exists
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
   try {
+    // File size in bytes
+    const fileSizeInBytes = req.file.size;
+
+    // Convert file size to a human-readable string
+    const fileSize = formatFileSize(fileSizeInBytes);
+
     const newFile = new File({
       filename: req.file?.filename,
       uploaderId: userId,
+      fileSize: fileSize
     });
+    
     await newFile.save();
-    res.status(201).json({ message: "File uploaded successfully" });
+
+    // Retrieve all files uploaded by this user
+    const userFiles = await File.find({ uploaderId: userId });
+
+    res.status(201).json({
+      message: "File uploaded successfully",
+      userFiles,
+    });
   } catch (error) {
     console.log("Error uploading file:", error.message);
     res.status(500).json({ message: "Error uploading file" });
   }
 });
+
+// Helper function to format file size
+function formatFileSize(bytes) {
+  const units = ["Bytes", "KB", "MB", "GB", "TB"];
+  let unitIndex = 0;
+  let size = bytes;
+
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex++;
+  }
+
+  return `${size.toFixed(2)} ${units[unitIndex]}`;
+}
 
 // Route to access a file and log the event
 router.get("/:id", async (req, res) => {

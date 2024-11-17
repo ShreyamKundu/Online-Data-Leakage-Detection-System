@@ -11,7 +11,9 @@ const fileSchema = new mongoose.Schema({
     filename: { type: String, required: true },
     uploaderId: { type: String, ref: 'User', required: true },
     uploadDate: { type: Date, default: Date.now },
+    fileSize: { type: String },
     accessLog: [accessLogSchema], // Use the accessLogSchema here
 });
 
 export default mongoose.model('File', fileSchema);
+    
