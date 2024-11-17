@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:5173', // Replace with your frontend URL if it's different
+    origin: 'https://dataguard-shreyam-kundus-projects.vercel.app/', // Replace with your frontend URL if it's different
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add methods as needed
     credentials: true, // If you need cookies/auth tokens
   }));

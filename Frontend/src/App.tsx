@@ -6,6 +6,7 @@ import Signup from './sign-up/[[...index]]';
 import DashboardLayout from "./pages/dashboard/layout";
 import FilesPage from "./pages/dashboard/files";
 import Starting from "./pages/dashboard/starting";
+import FileDetailsPage from "./pages/download";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/sign-in/*" element={<Signin />} />
         <Route path="/sign-up/*" element={<Signup />} />
+        <Route path="/download/:fileId" element={<FileDetailsPage />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Starting />} />
           <Route path="files" element={<FilesPage />} />

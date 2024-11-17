@@ -110,7 +110,7 @@ export default function FilesPage() {
 
     // Handle copy link functionality
     const handleCopyLink = (file: CustomFile) => {
-      const fileLink = `${window.location.origin}/files/${file._id}`; // Construct the URL for the file
+      const fileLink = `https://dataguard-shreyam-kundus-projects.vercel.app/download/${file._id}`; // Construct the URL for the file
       navigator.clipboard.writeText(fileLink).then(() => {
         alert('Link copied to clipboard!');
       }).catch((err) => {
