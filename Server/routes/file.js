@@ -69,6 +69,28 @@ function formatFileSize(bytes) {
   return `${size.toFixed(2)} ${units[unitIndex]}`;
 }
 
+
+// Route to get file details by its ID
+router.get("/filename/:id", async (req, res) => {
+  try {
+    const fileId = req.params.id;
+
+    // Find the file by ID
+    const file = await File.findById(fileId);
+    if (!file) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
+    res.status(200).json({
+      file
+    });
+  } catch (error) {
+    console.error("Error getting file details:", error.message);
+    res.status(500).json({ message: "Error retrieving file details" });
+  }
+});
+
+
 // Route to access a file and log the event
 router.get("/:id", async (req, res) => {
   try {
